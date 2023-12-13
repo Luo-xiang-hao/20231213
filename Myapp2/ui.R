@@ -1,16 +1,21 @@
 fluidPage(
-  title = 'MathJax Examples',
-  withMathJax(),
-  helpText('An irrational number \\(\\sqrt{2}\\)
-           and a fraction $$1-\\frac{1}{2}$$'),
-  helpText('and a fact about \\(\\pi\\):
-           $$\\frac2\\pi = \\frac{\\sqrt2}2 \\cdot
-           \\frac{\\sqrt{2+\\sqrt2}}2 \\cdot
-           \\frac{\\sqrt{2+\\sqrt{2+\\sqrt2}}}2 \\cdots$$'),
-  uiOutput('ex1'),
-  uiOutput('ex2'),
-  uiOutput('ex3'),
-  uiOutput('ex4'),
-  checkboxInput('ex5_visible', 'Show Example 5', FALSE),
-  uiOutput('ex5')
+  
+  titlePanel("Conditional panels"),
+  
+  column(4, wellPanel(
+    sliderInput("n", "Number of points:",
+                min = 10, max = 200, value = 50, step = 10)
+  )),
+  
+  column(5,
+         "The plot below will be not displayed when the slider value",
+         "is less than 50.",
+         
+         # With the conditionalPanel, the condition is a JavaScript
+         # expression. In these expressions, input values like
+         # input$n are accessed with dots, as in input.n
+         conditionalPanel("input.n >= 50",
+                          plotOutput("scatterPlot", height = 300)
+         )
+  )
 )
